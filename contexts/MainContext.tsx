@@ -3,6 +3,7 @@ import React, { useState } from "react";
 const MainContext = React.createContext({});
 
 const MainProvider = (props: any) => {
+  // String list of players in the current game
   const [players, setPlayers] = useState([]);
 
   return (
