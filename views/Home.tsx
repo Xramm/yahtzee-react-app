@@ -1,6 +1,13 @@
 import { CardTitle } from "@rneui/base/dist/Card/Card.Title";
-import { Dialog, Input, Card, Button, Chip } from "@rneui/themed";
-import React, { useContext, useState } from "react";
+import { Dialog, Input, Card, Button, Chip, Text } from "@rneui/themed";
+import React, {
+  createRef,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { Alert, ScrollView } from "react-native";
 import PlayerListItem from "../components/PlayerListItem";
 import MainContext from "../contexts/MainContext";
 import Player from "../interfaces/Player";
@@ -11,6 +18,7 @@ const Home = ({ navigation }: any) => {
   const [addPlayerDialogIsVisible, setAddPlayerDialogIsVisible] =
     useState(false);
 
+  // Changed by the new player name input
   let newPlayerName = "";
 
   // Toggles the Add New Player dialog
@@ -25,16 +33,21 @@ const Home = ({ navigation }: any) => {
 
   // Called when a new player is being added into the player list
   const onAddPlayerSubmit = () => {
-    if (newPlayerName === '') {
-        toggleAddPlayerDialogVisible();
-        return;
-    };
+    // Deny new player if the name is null
+    if (newPlayerName === "") {
+      Alert.alert(
+        "Player name is empty",
+        "The player will not be added. Please enter a name to add a new player.",
+        [{ text: "Ok", onPress: toggleAddPlayerDialogVisible }]
+      );
+      return;
+    }
 
     // Create a new player object with the latest ID and the given name
-    const newPlayer = {id: players.length, name: newPlayerName}
+    const newPlayer = { id: players.length, name: newPlayerName };
 
     // Create a copy of the players, add the new player into it and set it as the new player list
-    const newPlayersList = players;
+    const newPlayersList = [...players];
     newPlayersList.push(newPlayer);
     setPlayers(newPlayersList);
 
@@ -43,7 +56,7 @@ const Home = ({ navigation }: any) => {
   };
 
   return (
-    <>
+    <ScrollView>
       <Card>
         <CardTitle>Players</CardTitle>
 
@@ -56,7 +69,12 @@ const Home = ({ navigation }: any) => {
 
       <Card>
         <Button
-          title="Start Game"
+          title={
+            players.length > 0
+              ? `Start ${players.length} Player Game`
+              : "Add Players To Start"
+          }
+          disabled={players.length <= 0}
           onPress={() => {
             navigation.navigate("Game");
           }}
@@ -69,11 +87,15 @@ const Home = ({ navigation }: any) => {
       >
         <Dialog.Title title="Add New Player" />
 
-        <Input placeholder="Player Name" onChangeText={onNewPlayerNameTextChange}/>
+        <Input
+          placeholder="Player Name"
+          onSubmitEditing={onAddPlayerSubmit}
+          onChangeText={onNewPlayerNameTextChange}
+        />
 
         <Button title="Add" onPress={onAddPlayerSubmit} />
       </Dialog>
-    </>
+    </ScrollView>
   );
 };
 
