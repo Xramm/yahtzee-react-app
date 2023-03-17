@@ -1,21 +1,33 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useContext } from "react";
+import { Dimensions, ScrollView, View } from "react-native";
+import PlayerScoreBoard from "../components/PlayerScoreBoard";
+import MainContext from "../contexts/MainContext";
+import Player from "../interfaces/Player";
 
 const Game = () => {
+  const { players }: any = useContext(MainContext.MainContext);
+
+  const singleBoardWidth = Dimensions.get("window").width / players.length;
+
   return (
-    <View style={styles.container}>
-      <Text>Game View</Text>
-    </View>
+    <ScrollView>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {players.map((player: Player) => (
+          <PlayerScoreBoard
+            key={player.id}
+            player={player}
+            boardWidth={singleBoardWidth}
+          />
+        ))}
+      </View>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 export default Game;

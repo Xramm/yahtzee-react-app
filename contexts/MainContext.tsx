@@ -4,7 +4,7 @@ const MainContext = React.createContext({});
 
 const MainProvider = (props: any) => {
   // String list of players in the current game
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState([{id: 0, name: "Matti"}, {id: 1, name: "Pekka"}, {id:2, name: "Teppo"}]);
 
   return (
     <MainContext.Provider value={{ players, setPlayers }}>
