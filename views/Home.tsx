@@ -13,7 +13,9 @@ import MainContext from "../contexts/MainContext";
 import Player from "../interfaces/Player";
 
 const Home = ({ navigation }: any) => {
-  const { players, setPlayers }: any = useContext(MainContext.MainContext);
+  const { players, setPlayers, maxDisplayedPlayers }: any = useContext(
+    MainContext.MainContext
+  );
 
   const [addPlayerDialogIsVisible, setAddPlayerDialogIsVisible] =
     useState(false);
@@ -55,10 +57,16 @@ const Home = ({ navigation }: any) => {
     toggleAddPlayerDialogVisible();
   };
 
+  const onStartGamePressed = () => {
+    navigation.navigate("Game");
+  };
+
   return (
     <ScrollView>
       <Card>
         <CardTitle>Players</CardTitle>
+
+        <Card.Divider />
 
         {players.map((player: Player) => (
           <PlayerListItem key={player.id} player={player} />
@@ -75,9 +83,7 @@ const Home = ({ navigation }: any) => {
               : "Add Players To Start"
           }
           disabled={players.length <= 0}
-          onPress={() => {
-            navigation.navigate("Game");
-          }}
+          onPress={onStartGamePressed}
         />
       </Card>
 

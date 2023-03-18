@@ -1,11 +1,18 @@
 import React from "react";
-import { Button, Input, Text} from "@rneui/themed";
+import { Button, Card, Input, Text } from "@rneui/themed";
 import Player from "../interfaces/Player";
 import { Dimensions, StyleSheet, View } from "react-native";
+import ScoreTile from "../interfaces/ScoreTile";
+import SelfAdjustText from "./SelfAdjustText";
 
-const PlayerScoreBoard = (props: { player: Player; boardWidth: number }) => {
+const PlayerScoreBoard = (props: {
+  player?: Player;
+  tiles: ScoreTile[];
+  boardWidth: number;
+}) => {
   const player = props.player;
   const scoreBoardWidth = props.boardWidth;
+  const tiles = props.tiles;
 
   // TODO: Use ScoreTile array instead!
   const tileArray = [
@@ -29,26 +36,44 @@ const PlayerScoreBoard = (props: { player: Player; boardWidth: number }) => {
     "Sum",
   ];
 
-  const singleTileHeight =
-    Dimensions.get("window").height / (tileArray.length);
+  const singleTileHeight = Dimensions.get("window").height / tileArray.length;
+
+  // Returns the JSX element of the tile depending on its type
+  const getTileElement = (tile: ScoreTile) => {
+    if (tile.type === "name") {
+      return <SelfAdjustText text={player?.name || ""} />;
+    }
+
+    if (tile.type === "title") {
+      return <SelfAdjustText text={tile.name} />;
+    }
+
+    if (tile.type === "sum") {
+      return <SelfAdjustText text={tile.currentScore.toString()} />;
+    }
+
+    // Return a normal custom score tile by default
+    return <Button title={tile.name} />;
+  };
 
   return (
     <View
       style={{
-        height: Dimensions.get("window").height,
+        height: "100%",
         width: scoreBoardWidth,
       }}
     >
-      {tileArray.map((tileString: string) => (
+      {tiles.map((scoreTile: ScoreTile, index: number) => (
         <View
+          key={index}
           style={{
-            height: singleTileHeight,
+            height: "5.5%", // TODO: Calculate this smartly lol. This is hardcoded for now
             width: scoreBoardWidth,
             padding: 2,
           }}
         >
-          <View style={{flex: 1, backgroundColor: "white"}}>
-            <Input placeholder={tileString}/>
+          <View style={{ flex: 1, backgroundColor: "white" }}>
+            {getTileElement(scoreTile)}
           </View>
         </View>
       ))}

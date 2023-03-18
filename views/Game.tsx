@@ -1,16 +1,26 @@
-import React, { useContext } from "react";
-import { Dimensions, ScrollView, View } from "react-native";
+import { Card } from "@rneui/themed";
+import React, { useContext, useLayoutEffect, useRef, useState } from "react";
+import { Dimensions, ScrollView, View, Alert } from "react-native";
 import PlayerScoreBoard from "../components/PlayerScoreBoard";
 import MainContext from "../contexts/MainContext";
 import Player from "../interfaces/Player";
+import { playerTiles, scoreTitleTiles } from "../utils/scoreTiles";
 
 const Game = () => {
-  const { players }: any = useContext(MainContext.MainContext);
+  const { players, maxDisplayedPlayers }: any = useContext(
+    MainContext.MainContext
+  );
 
-  const singleBoardWidth = Dimensions.get("window").width / players.length;
+  const getSingleBoardWidth = () => {
+    if (players.length < maxDisplayedPlayers) {
+      return Dimensions.get("window").width / (players.length + 1);
+    }
+
+    return Dimensions.get("window").width / (maxDisplayedPlayers + 1);
+  };
 
   return (
-    <ScrollView>
+    <ScrollView bounces={false} horizontal={true}>
       <View
         style={{
           flexDirection: "row",
@@ -18,13 +28,26 @@ const Game = () => {
           justifyContent: "center",
         }}
       >
+        <PlayerScoreBoard
+          tiles={scoreTitleTiles}
+          boardWidth={getSingleBoardWidth()}
+        />
         {players.map((player: Player) => (
           <PlayerScoreBoard
-            key={player.id}
             player={player}
-            boardWidth={singleBoardWidth}
+            tiles={playerTiles}
+            key={player.id}
+            boardWidth={getSingleBoardWidth()}
           />
         ))}
+        {players.length > maxDisplayedPlayers ? (
+          <PlayerScoreBoard
+            tiles={scoreTitleTiles}
+            boardWidth={getSingleBoardWidth()}
+          />
+        ) : (
+          <></>
+        )}
       </View>
     </ScrollView>
   );

@@ -129,7 +129,7 @@ const PlayerListItem = (props: { player: Player }) => {
   return (
     <>
       <ListItem>
-        <ListItem.Title>{player.name + " " + player.id}</ListItem.Title>
+        <ListItem.Title>{player.name}</ListItem.Title>
         <ListItem.ButtonGroup
           buttons={["Edit", "Down", "Up"]}
           onPress={onPlayerButtonGroupPress}
