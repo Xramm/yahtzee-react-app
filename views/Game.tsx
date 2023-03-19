@@ -1,5 +1,6 @@
 import { CardImage } from "@rneui/base/dist/Card/Card.Image";
 import { Button, Card, Dialog, Divider, Input, Overlay } from "@rneui/themed";
+import { cloneDeep } from "lodash";
 import React, { useContext, useLayoutEffect, useRef, useState } from "react";
 import { Dimensions, ScrollView, View, Alert, StyleSheet } from "react-native";
 import PlayerScoreBoard from "../components/PlayerScoreBoard";
@@ -18,9 +19,14 @@ const Game = () => {
 
   const [scoreInputElements, setScoreInputElements] = useState(<></>);
 
-  const { players, maxDisplayedPlayers }: any = useContext(
-    MainContext.MainContext
-  );
+  const {
+    players,
+    setPlayers,
+    maxDisplayedPlayers,
+    bonusPointThreshold,
+    bonusPointAmount,
+    setGameInProgress,
+  }: any = useContext(MainContext.MainContext);
 
   // Returns the width a single scoreboard column should be
   const getSingleBoardWidth = () => {
@@ -29,6 +35,39 @@ const Game = () => {
     }
 
     return Dimensions.get("window").width / (maxDisplayedPlayers + 1);
+  };
+
+  const updatePlayersTotalScores = () => {
+    const playersCopy = cloneDeep(players);
+
+    for (let i = 0; i < playersCopy.length; i++) {
+      if (!playersCopy[i].scoreTiles) return;
+
+      const tiles = playersCopy[i].scoreTiles;
+
+      let sum = 0;
+
+      for (let j = 0; j < tiles.length; j++) {
+        if (tiles[j].type.toLowerCase() === "midsum") {
+          //Sub sum
+          // Add bonus points to this tile
+          if (sum >= bonusPointThreshold) {
+            tiles[j].currentScore = bonusPointAmount;
+            sum += tiles[j].currentScore;
+          }
+
+          tiles[j].name = sum.toString();
+        } else if (tiles[j].type.toLowerCase() === "sum") {
+          //Total Sum
+          tiles[j].currentScore = sum;
+          tiles[j].name = sum.toString();
+        } else {
+          sum += tiles[j].currentScore;
+        }
+      }
+    }
+
+    setPlayers(playersCopy);
   };
 
   // Toggles the visibility of the dialog allowing score input
@@ -43,6 +82,10 @@ const Game = () => {
   ) => {
     tile.currentScore = score;
     tile.name = tileText;
+
+    //Update scores of the players (screw updating just the one player right?)
+    updatePlayersTotalScores();
+
     setScoreInputDialogIsVisible(false);
   };
 

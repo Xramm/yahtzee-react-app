@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Card, Dialog, Input, Text } from "@rneui/themed";
 import Player from "../interfaces/Player";
 import { Dimensions, StyleSheet, View } from "react-native";
 import ScoreTile from "../interfaces/ScoreTile";
 import SelfAdjustText from "./SelfAdjustText";
 import { scoreTitleTiles } from "../utils/scoreTiles";
+import MainContext from "../contexts/MainContext";
+import { bonusColor } from "../utils/colors";
 
 const PlayerScoreBoard = (props: {
   overrideTiles?: ScoreTile[];
@@ -17,27 +19,37 @@ const PlayerScoreBoard = (props: {
 
   const tiles = props.overrideTiles ? props.overrideTiles : player?.scoreTiles;
 
+  const { bonusPointThreshold } : any = useContext(MainContext.MainContext);
+
   if (!tiles) {
     console.error("ERROR: Playerscoreboard without tiles at all created!");
     return <></>;
   }
 
   for (let i = 0; i < tiles.length; i++) {
+    if (tiles[i].type === "sum") continue;
     tiles[i].description = `${scoreTitleTiles[i].name} For ${player?.name}`;
   }
 
   // Returns the JSX element of the tile depending on its type
   const getTileElement = (tile: ScoreTile) => {
     if (tile.type === "name") {
-      return <SelfAdjustText text={player?.name || ""} />;
+      return (
+        <SelfAdjustText backgroundColor="white" text={player?.name || ""} />
+      );
     }
 
     if (tile.type === "title") {
-      return <SelfAdjustText text={tile.name} />;
+      return <SelfAdjustText backgroundColor="white" text={tile.name} />;
+    }
+
+    if (tile.type === "midsum") {
+      const parsedScore: number = +tile.name;
+      return <SelfAdjustText backgroundColor={parsedScore >= bonusPointThreshold ? bonusColor : 'white'} text={tile.name} />;
     }
 
     if (tile.type === "sum") {
-      return <SelfAdjustText text={tile.currentScore.toString()} />;
+      return <SelfAdjustText backgroundColor="white" text={tile.name} />;
     }
     // Return a normal score tile by default
     return (

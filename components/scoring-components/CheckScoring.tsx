@@ -1,48 +1,24 @@
-import { Button, Card } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import ScoreTile from "../../interfaces/ScoreTile";
 
-const OneDieScoring = (props: {
-  headNumber: number;
+const CheckScoring = (props: {
+  scoreAmount: number;
   tile: ScoreTile;
   onSubmitScore: Function;
 }) => {
-  const headNumber = props.headNumber;
-
-  const choiceArray = [
-    headNumber,
-    headNumber * 2,
-    headNumber * 3,
-    headNumber * 4,
-    headNumber * 5,
-  ];
-
-  const getButtonForChoice = (scoreChoice: number) => {
-    return (
-      <Button
-        size="lg"
-        containerStyle={styles.choiceButtonStyle}
-        title={scoreChoice.toString()}
-        onPress={() => {
-          props.onSubmitScore(props.tile, scoreChoice, scoreChoice.toString());
-        }}
-      />
-    );
-  };
-
   return (
     <>
       <View style={styles.rowStyle}>
-        {getButtonForChoice(choiceArray[0])}
-        {getButtonForChoice(choiceArray[1])}
-      </View>
-      <View style={styles.rowStyle}>
-        {getButtonForChoice(choiceArray[2])}
-        {getButtonForChoice(choiceArray[3])}
-      </View>
-      <View style={styles.rowStyle}>
-        {getButtonForChoice(choiceArray[4])}
+        <Button
+          size="lg"
+          containerStyle={styles.choiceButtonStyle}
+          title={`Add ${props.scoreAmount} Points`}
+          onPress={() => {
+            props.onSubmitScore(props.tile, props.scoreAmount, props.scoreAmount.toString());
+          }}
+        />
       </View>
       <View style={styles.rowStyle}>
         <Button
@@ -78,4 +54,4 @@ const styles = StyleSheet.create({
   choiceButtonStyle: { flex: 1, marginLeft: "5%", marginRight: "5%" },
 });
 
-export default OneDieScoring;
+export default CheckScoring;

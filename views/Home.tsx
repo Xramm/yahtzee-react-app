@@ -15,9 +15,8 @@ import cloneDeep from "lodash/cloneDeep";
 import { playerTiles } from "../utils/scoreTiles";
 
 const Home = ({ navigation }: any) => {
-  const { players, setPlayers, maxDisplayedPlayers }: any = useContext(
-    MainContext.MainContext
-  );
+  const { players, setPlayers, gameInProgress, setGameInProgress }: any =
+    useContext(MainContext.MainContext);
 
   const [addPlayerDialogIsVisible, setAddPlayerDialogIsVisible] =
     useState(false);
@@ -48,7 +47,11 @@ const Home = ({ navigation }: any) => {
     }
 
     // Create a new player object with the latest ID and the given name
-    const newPlayer = { id: players.length, name: newPlayerName, scoreTiles: cloneDeep(playerTiles)};
+    const newPlayer = {
+      id: players.length,
+      name: newPlayerName,
+      scoreTiles: cloneDeep(playerTiles),
+    };
 
     // Create a copy of the players, add the new player into it and set it as the new player list
     const newPlayersList = [...players];
@@ -60,7 +63,32 @@ const Home = ({ navigation }: any) => {
   };
 
   const onStartGamePressed = () => {
+    setGameInProgress(true);
     navigation.navigate("Game");
+  };
+
+  const onResetGamePressed = () => {
+    Alert.alert(
+      "Reset Scores",
+      "Are you sure you want to zero the current scoreboard?",
+      [
+        { text: "No" },
+        {
+          text: "Yes",
+          onPress: () => {
+            const playersCopy = cloneDeep(players);
+
+            for (let i = 0; i < playersCopy.length; i++) {
+              playersCopy[i].scoreTiles = cloneDeep(playerTiles);
+            }
+
+            setPlayers(playersCopy);
+
+            setGameInProgress(false);
+          },
+        },
+      ]
+    );
   };
 
   return (
@@ -74,14 +102,34 @@ const Home = ({ navigation }: any) => {
           <PlayerListItem key={player.id} player={player} />
         ))}
 
+        {!gameInProgress || (
+          <>
+            <CardTitle>Order Locked During Game</CardTitle>
+            <Card.Divider />
+          </>
+        )}
+
         <Button title="Add Player" onPress={toggleAddPlayerDialogVisible} />
       </Card>
 
       <Card>
+        {!gameInProgress || (
+          <>
+            <Button
+              title="Reset Current Game"
+              color="error"
+              onPress={onResetGamePressed}
+            />
+            <Card.Divider />
+          </>
+        )}
         <Button
+          size="lg"
           title={
             players.length > 0
-              ? `Start ${players.length} Player Game`
+              ? `${gameInProgress ? "Continue" : "Start"} ${
+                  players.length
+                } Player Game`
               : "Add Players To Start"
           }
           disabled={players.length <= 0}

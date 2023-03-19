@@ -40,7 +40,7 @@ const playerTiles: ScoreTile[] = [
   },
   {
     name: "0",
-    type: "sum",
+    type: "midsum",
     currentScore: 0,
   },
   {

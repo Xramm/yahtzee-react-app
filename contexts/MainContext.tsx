@@ -1,16 +1,33 @@
 import { cloneDeep } from "lodash";
 import React, { useState } from "react";
+import Player from "../interfaces/Player";
 import { playerTiles } from "../utils/scoreTiles";
 
 const MainContext = React.createContext({});
 
 const MainProvider = (props: any) => {
   // String list of players in the current game
-  const [players, setPlayers] = useState([{id: 0, name: "Matti", scoreTiles: cloneDeep(playerTiles)}, {id: 1, name: "Pekka", scoreTiles: cloneDeep(playerTiles)}, {id:2, name: "Teppo", scoreTiles: cloneDeep(playerTiles)}]);
+  const [players, setPlayers] = useState([]);
+  const [gameInProgress, setGameInProgress] = useState(false);
   const [maxDisplayedPlayers, setMaxDisplayedPlayers] = useState(4);
+  const [bonusPointThreshold, setBonusPointThreshold] = useState(63);
+  const [bonusPointAmount, setBonusPointAmount] = useState(50);
 
   return (
-    <MainContext.Provider value={{ players, setPlayers, maxDisplayedPlayers, setMaxDisplayedPlayers }}>
+    <MainContext.Provider
+      value={{
+        players,
+        setPlayers,
+        maxDisplayedPlayers,
+        setMaxDisplayedPlayers,
+        bonusPointThreshold,
+        setBonusPointThreshold,
+        bonusPointAmount,
+        setBonusPointAmount,
+        gameInProgress,
+        setGameInProgress
+      }}
+    >
       {props.children}
     </MainContext.Provider>
   );

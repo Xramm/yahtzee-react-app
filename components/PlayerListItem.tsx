@@ -12,12 +12,11 @@ import React, { useContext, useState } from "react";
 import { Alert } from "react-native";
 import MainContext from "../contexts/MainContext";
 import Player from "../interfaces/Player";
-import { warningColor } from "../utils/colors";
 
 const PlayerListItem = (props: { player: Player }) => {
   const player = props.player;
 
-  const { players, setPlayers }: any = useContext(MainContext.MainContext);
+  const { players, setPlayers, gameInProgress }: any = useContext(MainContext.MainContext);
 
   const [editDialogIsVisible, setEditDialogIsVisible] = useState(false);
 
@@ -132,6 +131,7 @@ const PlayerListItem = (props: { player: Player }) => {
         <ListItem.Title>{player.name}</ListItem.Title>
         <ListItem.ButtonGroup
           buttons={["Edit", "Down", "Up"]}
+          disabled={gameInProgress ? [1,2] : []}
           onPress={onPlayerButtonGroupPress}
         />
       </ListItem>

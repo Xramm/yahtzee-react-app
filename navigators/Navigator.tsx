@@ -9,8 +9,8 @@ const Stack = createNativeStackNavigator();
 const StackScreen = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Game" component={Game} />
+      <Stack.Screen name="Home" component={Home} options={{ title: "Yahtzee by Xramu" }}/>
+      <Stack.Screen name="Game" component={Game} options={{ title: "Game Scoreboard" }} />
     </Stack.Navigator>
   );
 };

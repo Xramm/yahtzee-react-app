@@ -1,3 +1,3 @@
-const warningColor = "#eb4034";
+const bonusColor = "#7FDC67";
 
-export { warningColor };
+export { bonusColor };
