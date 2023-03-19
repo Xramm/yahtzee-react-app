@@ -150,7 +150,7 @@ const PlayerListItem = (props: { player: Player }) => {
           onChangeText={onEditNameChangeText}
         />
 
-        <Button title="Remove" onPress={onRemovePressed} color={warningColor} />
+        <Button title="Remove" onPress={onRemovePressed} color="error" />
 
         <Card.Divider width={0} />
 

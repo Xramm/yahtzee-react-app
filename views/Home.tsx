@@ -11,6 +11,8 @@ import { Alert, ScrollView } from "react-native";
 import PlayerListItem from "../components/PlayerListItem";
 import MainContext from "../contexts/MainContext";
 import Player from "../interfaces/Player";
+import cloneDeep from "lodash/cloneDeep";
+import { playerTiles } from "../utils/scoreTiles";
 
 const Home = ({ navigation }: any) => {
   const { players, setPlayers, maxDisplayedPlayers }: any = useContext(
@@ -46,7 +48,7 @@ const Home = ({ navigation }: any) => {
     }
 
     // Create a new player object with the latest ID and the given name
-    const newPlayer = { id: players.length, name: newPlayerName };
+    const newPlayer = { id: players.length, name: newPlayerName, scoreTiles: cloneDeep(playerTiles)};
 
     // Create a copy of the players, add the new player into it and set it as the new player list
     const newPlayersList = [...players];
