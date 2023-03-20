@@ -1,5 +1,5 @@
-import React, { useContext, useState } from "react";
-import { Button, Card, Dialog, Input, Text } from "@rneui/themed";
+import React, { useContext } from "react";
+import { Button } from "@rneui/themed";
 import Player from "../interfaces/Player";
 import { Dimensions, StyleSheet, View } from "react-native";
 import ScoreTile from "../interfaces/ScoreTile";
@@ -19,7 +19,7 @@ const PlayerScoreBoard = (props: {
 
   const tiles = props.overrideTiles ? props.overrideTiles : player?.scoreTiles;
 
-  const { bonusPointThreshold } : any = useContext(MainContext.MainContext);
+  const { bonusPointThreshold }: any = useContext(MainContext.MainContext);
 
   if (!tiles) {
     console.error("ERROR: Playerscoreboard without tiles at all created!");
@@ -45,7 +45,14 @@ const PlayerScoreBoard = (props: {
 
     if (tile.type === "midsum") {
       const parsedScore: number = +tile.name;
-      return <SelfAdjustText backgroundColor={parsedScore >= bonusPointThreshold ? bonusColor : 'white'} text={tile.name} />;
+      return (
+        <SelfAdjustText
+          backgroundColor={
+            parsedScore >= bonusPointThreshold ? bonusColor : "white"
+          }
+          text={tile.name}
+        />
+      );
     }
 
     if (tile.type === "sum") {

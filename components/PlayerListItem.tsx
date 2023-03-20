@@ -1,13 +1,4 @@
-import { CardTitle } from "@rneui/base/dist/Card/Card.Title";
-import {
-  Dialog,
-  Input,
-  Card,
-  Button,
-  Chip,
-  ListItem,
-  ButtonGroup,
-} from "@rneui/themed";
+import { Dialog, Input, Card, Button, ListItem } from "@rneui/themed";
 import React, { useContext, useState } from "react";
 import { Alert } from "react-native";
 import MainContext from "../contexts/MainContext";
@@ -16,7 +7,9 @@ import Player from "../interfaces/Player";
 const PlayerListItem = (props: { player: Player }) => {
   const player = props.player;
 
-  const { players, setPlayers, gameInProgress }: any = useContext(MainContext.MainContext);
+  const { players, setPlayers, gameInProgress }: any = useContext(
+    MainContext.MainContext
+  );
 
   const [editDialogIsVisible, setEditDialogIsVisible] = useState(false);
 
@@ -131,7 +124,7 @@ const PlayerListItem = (props: { player: Player }) => {
         <ListItem.Title>{player.name}</ListItem.Title>
         <ListItem.ButtonGroup
           buttons={["Edit", "Down", "Up"]}
-          disabled={gameInProgress ? [1,2] : []}
+          disabled={gameInProgress ? [1, 2] : []}
           onPress={onPlayerButtonGroupPress}
         />
       </ListItem>

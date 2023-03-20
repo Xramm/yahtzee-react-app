@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import MainContext from "../contexts/MainContext";
 import ScoreTile from "../interfaces/ScoreTile";
 
 const playerTiles: ScoreTile[] = [

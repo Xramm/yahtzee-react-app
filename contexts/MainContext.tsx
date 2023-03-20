@@ -1,7 +1,4 @@
-import { cloneDeep } from "lodash";
 import React, { useState } from "react";
-import Player from "../interfaces/Player";
-import { playerTiles } from "../utils/scoreTiles";
 
 const MainContext = React.createContext({});
 
@@ -25,7 +22,7 @@ const MainProvider = (props: any) => {
         bonusPointAmount,
         setBonusPointAmount,
         gameInProgress,
-        setGameInProgress
+        setGameInProgress,
       }}
     >
       {props.children}

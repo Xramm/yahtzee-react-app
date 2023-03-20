@@ -1,12 +1,6 @@
 import { CardTitle } from "@rneui/base/dist/Card/Card.Title";
-import { Dialog, Input, Card, Button, Chip, Text } from "@rneui/themed";
-import React, {
-  createRef,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Dialog, Input, Card, Button } from "@rneui/themed";
+import React, { useContext, useState } from "react";
 import { Alert, ScrollView } from "react-native";
 import PlayerListItem from "../components/PlayerListItem";
 import MainContext from "../contexts/MainContext";

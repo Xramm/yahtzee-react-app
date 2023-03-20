@@ -1,5 +1,5 @@
-import { Button, Card, Image, Input } from "@rneui/themed";
-import React, { useRef, useState } from "react";
+import { Button, Card, Input } from "@rneui/themed";
+import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import ScoreTile from "../../interfaces/ScoreTile";
 
@@ -8,7 +8,9 @@ const ManualScoring = (props: {
   tile: ScoreTile;
   onSubmitScore: Function;
 }) => {
-  const [inputString, setInputString] = useState(props.tile.currentScore != 0 ? props.tile.currentScore.toString() : '');
+  const [inputString, setInputString] = useState(
+    props.tile.currentScore != 0 ? props.tile.currentScore.toString() : ""
+  );
 
   const submitScore = () => {
     let parsedScore: number = +inputString;

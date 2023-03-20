@@ -1,4 +1,3 @@
-import { Card } from "@rneui/themed";
 import React from "react";
 import ScoreTile from "../../interfaces/ScoreTile";
 import CheckScoring from "./CheckScoring";
@@ -144,15 +143,15 @@ const ScoringComponentMaster = (props: {
       break;
     }
     case "chance": {
-        result = (
-          <ManualScoring
-            maxPoints={30}
-            tile={props.tile}
-            onSubmitScore={props.onSubmitScore}
-          />
-        );
-        break;
-      }
+      result = (
+        <ManualScoring
+          maxPoints={30}
+          tile={props.tile}
+          onSubmitScore={props.onSubmitScore}
+        />
+      );
+      break;
+    }
     case "yahtzee": {
       result = (
         <CheckScoring

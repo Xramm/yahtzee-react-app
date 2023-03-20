@@ -1,4 +1,4 @@
-import { Button, Card } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import ScoreTile from "../../interfaces/ScoreTile";

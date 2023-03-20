@@ -1,17 +1,13 @@
-import { CardImage } from "@rneui/base/dist/Card/Card.Image";
-import { Button, Card, Dialog, Divider, Input, Overlay } from "@rneui/themed";
+import { Card, Dialog } from "@rneui/themed";
 import { cloneDeep } from "lodash";
-import React, { useContext, useLayoutEffect, useRef, useState } from "react";
-import { Dimensions, ScrollView, View, Alert, StyleSheet } from "react-native";
+import React, { useContext, useState } from "react";
+import { Dimensions, ScrollView, View } from "react-native";
 import PlayerScoreBoard from "../components/PlayerScoreBoard";
-import ScoreChoiceButton from "../components/ScoreChoiceButton";
-import OneDieScoring from "../components/scoring-components/OneDieScoring";
 import ScoringComponentMaster from "../components/scoring-components/ScoringComponentMaster";
 import MainContext from "../contexts/MainContext";
-import DicePattern from "../interfaces/DicePattern";
 import Player from "../interfaces/Player";
 import ScoreTile from "../interfaces/ScoreTile";
-import { playerTiles, scoreTitleTiles } from "../utils/scoreTiles";
+import { scoreTitleTiles } from "../utils/scoreTiles";
 
 const Game = () => {
   const [scoreInputDialogIsVisible, setScoreInputDialogIsVisible] =

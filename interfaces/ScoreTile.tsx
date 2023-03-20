@@ -1,7 +1,3 @@
-import React from "react";
-import DicePattern from "./DicePattern";
-import Player from "./Player";
-
 interface ScoreTile {
   name: string;
   type: string;
