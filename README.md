@@ -12,4 +12,4 @@ The scoring system most likely differs a lot from scoreboard to scoreboard but t
 If you want to run this project for any reason, you will need Node and Expo.
 
 ## Releases
-Haven't done any yet.
+Current APK can be found [here](https://github.com/Xramm/yahtzee-react-app/releases/tag/Releases)
