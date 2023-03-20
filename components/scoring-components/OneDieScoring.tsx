@@ -1,4 +1,4 @@
-import { Button } from "@rneui/themed";
+import { Button, Card } from "@rneui/themed";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import ScoreTile from "../../interfaces/ScoreTile";
@@ -41,9 +41,10 @@ const OneDieScoring = (props: {
         {getButtonForChoice(choiceArray[2])}
         {getButtonForChoice(choiceArray[3])}
       </View>
-      <View style={styles.rowStyle}>
-        {getButtonForChoice(choiceArray[4])}
-      </View>
+      <View style={styles.rowStyle}>{getButtonForChoice(choiceArray[4])}</View>
+
+      <Card.Divider />
+
       <View style={styles.rowStyle}>
         <Button
           size="lg"

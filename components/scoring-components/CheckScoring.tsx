@@ -1,4 +1,4 @@
-import { Button } from "@rneui/themed";
+import { Button, Card } from "@rneui/themed";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import ScoreTile from "../../interfaces/ScoreTile";
@@ -16,10 +16,17 @@ const CheckScoring = (props: {
           containerStyle={styles.choiceButtonStyle}
           title={`Add ${props.scoreAmount} Points`}
           onPress={() => {
-            props.onSubmitScore(props.tile, props.scoreAmount, props.scoreAmount.toString());
+            props.onSubmitScore(
+              props.tile,
+              props.scoreAmount,
+              props.scoreAmount.toString()
+            );
           }}
         />
       </View>
+
+      <Card.Divider />
+
       <View style={styles.rowStyle}>
         <Button
           size="lg"

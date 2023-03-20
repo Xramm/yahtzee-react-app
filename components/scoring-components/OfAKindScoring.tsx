@@ -60,6 +60,9 @@ const OfAKindScoring = (props: {
         {getButtonForChoice(5)}
         {getButtonForChoice(6)}
       </View>
+
+      <Card.Divider />
+
       <View style={styles.rowStyle}>
         <Button
           size="lg"

@@ -87,6 +87,8 @@ const ManualScoring = (props: {
         />
       </View>
 
+      <Card.Divider />
+
       <View style={styles.rowStyle}>
         <Button
           size="lg"
