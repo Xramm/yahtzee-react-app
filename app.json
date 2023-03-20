@@ -22,16 +22,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#2089DC"
       },
-      "package": "com.xramu.yahtzee-react-app"
+      "package": "com.xramu.rnyahtzee"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "updates": {
-      "codeSigningCertificate": "./certs/certificate.pem",
-      "codeSigningMetadata": {
-        "keyid": "main",
-        "alg": "rsa-v1_5-sha256"
+    "extra": {
+      "eas": {
+        "projectId": "09536042-f649-4c5c-bade-dd07a82ffd3b"
       }
     }
   }
