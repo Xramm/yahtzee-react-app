@@ -9,6 +9,7 @@ const MainProvider = (props: any) => {
   const [maxDisplayedPlayers, setMaxDisplayedPlayers] = useState(4);
   const [bonusPointThreshold, setBonusPointThreshold] = useState(63);
   const [bonusPointAmount, setBonusPointAmount] = useState(50);
+  const [forceManualScoring, setForceManualScoring] = useState(false);
 
   return (
     <MainContext.Provider
@@ -23,6 +24,8 @@ const MainProvider = (props: any) => {
         setBonusPointAmount,
         gameInProgress,
         setGameInProgress,
+        forceManualScoring,
+        setForceManualScoring,
       }}
     >
       {props.children}

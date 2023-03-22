@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import MainContext from "../../contexts/MainContext";
 import ScoreTile from "../../interfaces/ScoreTile";
 import CheckScoring from "./CheckScoring";
 import ManualScoring from "./ManualScoring";
@@ -9,6 +10,19 @@ const ScoringComponentMaster = (props: {
   tile: ScoreTile;
   onSubmitScore: Function;
 }) => {
+  const { forceManualScoring }: any = useContext(MainContext.MainContext);
+
+  // For overriding scoring input
+  if (forceManualScoring) {
+    return (
+      <ManualScoring
+        maxPoints={999}
+        tile={props.tile}
+        onSubmitScore={props.onSubmitScore}
+      />
+    );
+  }
+
   let result = <></>;
 
   switch (props.tile.type.toLowerCase()) {

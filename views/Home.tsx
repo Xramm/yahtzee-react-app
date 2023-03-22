@@ -1,7 +1,7 @@
 import { CardTitle } from "@rneui/base/dist/Card/Card.Title";
-import { Dialog, Input, Card, Button } from "@rneui/themed";
-import React, { useContext, useState } from "react";
-import { Alert, ScrollView } from "react-native";
+import { Dialog, Input, Card, Button, Icon } from "@rneui/themed";
+import React, { createRef, useContext, useEffect, useState } from "react";
+import { Alert, ScrollView, TextInput } from "react-native";
 import PlayerListItem from "../components/PlayerListItem";
 import MainContext from "../contexts/MainContext";
 import Player from "../interfaces/Player";
@@ -14,6 +14,8 @@ const Home = ({ navigation }: any) => {
 
   const [addPlayerDialogIsVisible, setAddPlayerDialogIsVisible] =
     useState(false);
+
+  const playerNameInputRef: any = createRef();
 
   // Changed by the new player name input
   let newPlayerName = "";
@@ -56,12 +58,15 @@ const Home = ({ navigation }: any) => {
     toggleAddPlayerDialogVisible();
   };
 
+  // When the player clicks Start Game or Continue Game button
   const onStartGamePressed = () => {
     setGameInProgress(true);
     navigation.navigate("Game");
   };
 
+  // Called when player wants to reset the currently running game
   const onResetGamePressed = () => {
+    // Ask for confirmation before reset
     Alert.alert(
       "Reset Scores",
       "Are you sure you want to zero the current scoreboard?",
@@ -85,8 +90,15 @@ const Home = ({ navigation }: any) => {
     );
   };
 
+  useEffect(() => {
+    // Open keyboard up when the input is shown
+    if (playerNameInputRef.current) {
+      setTimeout(() => playerNameInputRef.current?.focus(), 100);
+    }
+  }, [addPlayerDialogIsVisible]);
+
   return (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps="handled">
       <Card>
         <CardTitle>Players</CardTitle>
 
@@ -138,6 +150,7 @@ const Home = ({ navigation }: any) => {
         <Dialog.Title title="Add New Player" />
 
         <Input
+          ref={playerNameInputRef}
           placeholder="Player Name"
           onSubmitEditing={onAddPlayerSubmit}
           onChangeText={onNewPlayerNameTextChange}

@@ -1,5 +1,5 @@
 import { Dialog, Input, Card, Button, ListItem } from "@rneui/themed";
-import React, { useContext, useState } from "react";
+import React, { createRef, useContext, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import MainContext from "../contexts/MainContext";
 import Player from "../interfaces/Player";
@@ -12,6 +12,8 @@ const PlayerListItem = (props: { player: Player }) => {
   );
 
   const [editDialogIsVisible, setEditDialogIsVisible] = useState(false);
+
+  const playerNameInputRef: any = createRef();
 
   // Changed by the name input
   let playerEditName = "";
@@ -118,6 +120,13 @@ const PlayerListItem = (props: { player: Player }) => {
     }
   };
 
+  useEffect(() => {
+    // Open keyboard up when the input is shown
+    if (playerNameInputRef.current) {
+      setTimeout(() => playerNameInputRef.current?.focus(), 100);
+    }
+  }, [editDialogIsVisible]);
+
   return (
     <>
       <ListItem>
@@ -138,6 +147,7 @@ const PlayerListItem = (props: { player: Player }) => {
         <Dialog.Title title="Edit Player" />
 
         <Input
+          ref={playerNameInputRef}
           placeholder={player.name}
           onSubmitEditing={onSavePressed}
           onChangeText={onEditNameChangeText}
