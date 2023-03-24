@@ -1,6 +1,6 @@
 import { Card, Dialog } from "@rneui/themed";
 import { cloneDeep } from "lodash";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Dimensions, ScrollView, View } from "react-native";
 import PlayerScoreBoard from "../components/PlayerScoreBoard";
 import ScoringComponentMaster from "../components/scoring-components/ScoringComponentMaster";
@@ -102,6 +102,11 @@ const Game = () => {
 
     toggleScoreInputDialogIsVisible();
   };
+
+  // Update scoring whenever bonus point settings get changed
+  useEffect(() => {
+    updatePlayersTotalScores();
+  }, [bonusPointAmount, bonusPointThreshold]);
 
   return (
     <ScrollView bounces={false} horizontal={true}>

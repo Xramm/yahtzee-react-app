@@ -15,14 +15,23 @@ const Settings = ({ navigation }: any) => {
     setBonusPointAmount,
   }: any = useContext(MainContext.MainContext);
 
-  let parsedNum: number = 0;
+  let parsedBonusAmountNum: number = 0;
+  let parsedBonusThresholdNum: number = 0;
 
   const onChangeTextBonusScoreAmount = (value: string) => {
-    parsedNum = +value;
+    parsedBonusAmountNum = +value;
   };
 
   const onConfirmBonusScoreAmount = () => {
-    setBonusPointAmount(parsedNum);
+    setBonusPointAmount(parsedBonusAmountNum);
+  };
+
+  const onChangeTextBonusScoreThreshold = (value: string) => {
+    parsedBonusThresholdNum = +value;
+  };
+
+  const onConfirmBonusScoreThreshold = () => {
+    setBonusPointThreshold(parsedBonusThresholdNum);
   };
 
   return (
@@ -63,6 +72,33 @@ const Settings = ({ navigation }: any) => {
             containerStyle={styles.rowButton}
             title="Save"
             onPress={onConfirmBonusScoreAmount}
+          />
+        </View>
+
+        <Card.Divider />
+
+        <Card.Title>Bonus Score Threshold</Card.Title>
+
+        <Input
+          keyboardType="numeric"
+          placeholder={bonusPointThreshold.toString()}
+          onSubmitEditing={onConfirmBonusScoreThreshold}
+          onChangeText={onChangeTextBonusScoreThreshold}
+        />
+
+        <View style={styles.buttonRow}>
+          <Button
+            containerStyle={styles.rowButton}
+            color="error"
+            title="Reset"
+            onPress={() => {
+              setBonusPointThreshold(63);
+            }}
+          />
+          <Button
+            containerStyle={styles.rowButton}
+            title="Save"
+            onPress={onConfirmBonusScoreThreshold}
           />
         </View>
 
