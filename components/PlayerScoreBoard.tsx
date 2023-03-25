@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Button } from "@rneui/themed";
+import { Button, Text } from "@rneui/themed";
 import Player from "../interfaces/Player";
 import { Dimensions, StyleSheet, View } from "react-native";
 import ScoreTile from "../interfaces/ScoreTile";
@@ -64,6 +64,8 @@ const PlayerScoreBoard = (props: {
         title={tile.name}
         color={tile.name === "-" ? "warning" : "primary"}
         type={tile.name === "0" || tile.name === "-" ? "solid" : "outline"}
+        buttonStyle={{margin: 0, padding: 0, height: "100%"}}
+        titleStyle={{flex: 1, margin: 0, padding: 0}}
         onPress={() => {
           props.onTilePress?.(tile);
         }}
